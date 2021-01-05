@@ -1,33 +1,42 @@
-var titulo = document.querySelector(".titulo");
+let titulo = document.querySelector(".titulo");
 titulo.textContent = "Aparecida Nutricionista";
 
-const paciente = document.querySelector("#primeiro-paciente");
+    let pacientes = document.querySelectorAll(".paciente"); // aqui está selecionando o Array de pacientes pela classe CSS
+// let paciente = document.querySelector("#primeiro-paciente");  aqui estava pegando a id do primeiro-paciente
 
-const tdAltura = paciente.querySelector(".info-altura");
-const tdPeso = paciente.querySelector(".info-peso");
-const tdImc = paciente.querySelector(".info-imc");
+    for (let i = 0; i < pacientes.length; i++) {
 
-const altura = tdAltura.textContent;
-const peso = tdPeso.textContent;
+        let paciente = pacientes[i];
+        
+        let tdAltura = paciente.querySelector(".info-altura");
+        let tdPeso = paciente.querySelector(".info-peso");
+        let tdImc = paciente.querySelector(".info-imc");
+        
+        let altura = tdAltura.textContent;
+        let peso = tdPeso.textContent;
+        
+        let alturaEhValida = true;
+        let pesoEhValido = true;
+        
+        if (peso <= 0 || peso >= 1000) {
+          console.log("Peso inválido");
+          pesoEhValido = false;
+          tdImc.textContent = "Peso inválido!";
+          paciente.classList.add("paciente-invalido");
+        }
+        
+        if (altura <= 0 || altura >= 3.0) {
+          console.log("Altura inválida!");
+          alturaEhValida = false;
+          tdImc.textContent = "Altura inválida!";
+          paciente.classList.add("paciente-invalido");
+        }
+        
+        if (alturaEhValida && pesoEhValido) {
+          const imc = peso / (altura * altura);
+          tdImc.textContent = imc.toFixed(2);
+        } else {
+          tdImc.textContent = "Altura e/ou peso inválidos!"
+        }
+    }
 
-let alturaEhValida = true;
-let pesoEhValido = true;
-
-if (peso <= 0 || peso >= 1000) {
-  console.log("Peso inválido");
-  pesoEhValido = false;
-  tdImc.textContent = "Peso inválido!";
-}
-
-if (altura <= 0 || altura >= 3.0) {
-  console.log("Altura inválida!");
-  alturaEhValida = false;
-  tdImc.textContent = "Altura inválida!";
-}
-
-if (alturaEhValida && pesoEhValido) {
-  const imc = peso / (altura * altura);
-  tdImc.textContent = imc;
-} else {
-  tdImc.textContent = "Altura e/ou peso inválidos!"
-}
